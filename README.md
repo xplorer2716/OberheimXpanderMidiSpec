@@ -1,4 +1,4 @@
-#Oberheim Xpander and Matrix 12 Midi Specification
+# Oberheim Xpander and Matrix 12 Midi Specification
 
 This document is a rework of three old plain text files dealing with the MIDI spec of the Xpander/Matrix-12.
   - http://machines.hyperreal.org/manufacturers/Oberheim/Xpander.Matrix-12/info/Xpander.MIDI-spec.txt
