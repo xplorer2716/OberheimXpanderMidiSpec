@@ -9,4 +9,5 @@ This rework has been done to get a more human readable and unique set of informa
 Changes or additional information about the MIDI implementation were added when required. Redundant information between these files has been removed.
 
 The last version of this document is available here: https://github.com/xplorer2716/OberheimXpanderMidiSpec
+
 This document and example source code are released under the GPL V3.0 license.
