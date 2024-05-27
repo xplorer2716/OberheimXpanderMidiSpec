@@ -1,6 +1,6 @@
 # Oberheim Xpander and Matrix 12 Midi specification
 
-This document, originally released in 2008, is a rework of three old plain text files dealing with the MIDI spec of the Xpander/Matrix-12.
+This document, originally released in 2008, is a rework of three old plain text files dealing with the MIDI spec of the Oberheim Xpander/Matrix-12.
   - http://machines.hyperreal.org/manufacturers/Oberheim/Xpander.Matrix-12/info/Xpander.MIDI-spec.txt
   - http://www.soundofmusic.se/files/xpander_usergroup.htm
   - http://www.soundofmusic.se/files/xpander_midi_controller_notes.txt
