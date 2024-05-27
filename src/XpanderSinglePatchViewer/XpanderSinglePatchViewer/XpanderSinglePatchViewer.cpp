@@ -324,7 +324,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	memset(&patch, 0, sizeof(SinglePatch));
 
 	fprintf(stdout, "Oberheim Xpander/Matrix 12 single patch viewer");
-	fprintf(stdout, "The latest version of this utility can be found in the file section of the Xpantastic user group:  http://launch.groups.yahoo.com/group/xpantastic/ as part of the Xpander revisited MIDI specification");
+	fprintf(stdout, "The latest version of this utility can be found here: https://github.com/xplorer2716/OberheimXpanderMidiSpec");
 
 	// get sysex filename as argument
 	if (argc < 2) {
