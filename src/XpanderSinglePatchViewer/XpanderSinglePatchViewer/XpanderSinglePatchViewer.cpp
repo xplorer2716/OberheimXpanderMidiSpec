@@ -323,8 +323,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	SinglePatch patch;
 	memset(&patch, 0, sizeof(SinglePatch));
 
-	fprintf(stdout, "Oberheim Xpander/Matrix 12 single patch viewer");
-	fprintf(stdout, "The latest version of this utility can be found here: https://github.com/xplorer2716/OberheimXpanderMidiSpec");
+	fprintf(stdout, "Oberheim Xpander/Matrix 12 single patch viewer\n");
+	fprintf(stdout, "The latest version of this utility can be found here: https://github.com/xplorer2716/OberheimXpanderMidiSpec\n");
 
 	// get sysex filename as argument
 	if (argc < 2) {
