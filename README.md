@@ -22,6 +22,7 @@ This document assumes familiarity with the MIDI 1.0 specification and the operat
 
 | Date | Change |
 | --- | --- |
+| 09/04/2026 | Convert to Markdown format |
 | 05/27/2024 | Minor updates |
 | 08/15/2008 | Program data dump follows and [bulk data format](#bulk-data-format-cc-programming-language) updates.<br>Sample C/C++ source code of a single patch viewer application provided in the archive containing this document.<br>“Xpander MIDI Controller Notes” chapter moved before “MIDI Implementation”. |
 | 08/04/2008 | Initial revision. |
