@@ -783,365 +783,188 @@ If you specify a Multi patch sysex file, all single patches of the bank will be 
 
 For a single patch sysex file, the output will be similar to the following :
 
-Program type: 00h
-
-Program number: 3Bh (59)
-
-NAME: JUMP
-
+```text
+Program type:    00h
+Program number:  3Bh (59)
+NAME:   JUMP
 ---------------------------
-
-VCO1.freq: 00h 0
-
-VCO1.detune: 00h 0
-
-VCO1.pw: 1Fh 31
-
-VCO1.vol: 3Fh 63
-
-VCO1.mod: 0Eh 14 : LAG LEV\_1 VIB
-
-VCO1.wave: 03h 3 : TRI SAW
-
+VCO1.freq:       00h        0
+VCO1.detune:     00h        0
+VCO1.pw:         1Fh       31
+VCO1.vol:        3Fh       63
+VCO1.mod:        0Eh       14 : LAG LEV_1 VIB
+VCO1.wave:       03h        3 : TRI SAW
 ---------------------------
-
-VCO2.freq: 00h 0
-
-VCO2.detune: 11h 17
-
-VCO2.pw: 1Fh 31
-
-VCO2.vol: 3Fh 63
-
-VCO2.mod: 0Eh 14 : LAG LEV\_1 VIB
-
-VCO2.wave: 06h 6 : SAW PULSE
-
+VCO2.freq:       00h        0
+VCO2.detune:     11h       17
+VCO2.pw:         1Fh       31
+VCO2.vol:        3Fh       63
+VCO2.mod:        0Eh       14 : LAG LEV_1 VIB
+VCO2.wave:       06h        6 : SAW PULSE
 ---------------------------
-
-VCF.freq: 49h 73
-
-VCF.res: 00h 0
-
-VCF.mode: 01h 1 : LOW\_2
-
-VCF.vca1: 3Fh 63
-
-VCF.vca2: 00h 0
-
-VCF.mod: 04h 4 : LEV\_1
-
+VCF.freq:        49h       73
+VCF.res:         00h        0
+VCF.mode:        01h        1 : LOW_2
+VCF.vca1:        3Fh       63
+VCF.vca2:        00h        0
+VCF.mod:         04h        4 : LEV_1
 ---------------------------
-
-FMLAG.amp 00h 0
-
-FMLAG.dest: 01h 1 : VCF\_FREQ
-
-FMLAG.lag\_in: 00h 0 : KBD
-
-FMLAG.lag\_rate: 02h 2
-
-FMLAG.lag\_mode: 01h 1 : LEGATO
-
+FMLAG.amp        00h        0
+FMLAG.dest:      01h        1 : VCF_FREQ
+FMLAG.lag_in:    00h        0 : KBD
+FMLAG.lag_rate:  02h        2
+FMLAG.lag_mode:  01h        1 : LEGATO
 ---------------------------
-
-LFO[1].speed: 1Ch 28
-
-LFO[1].trg\_mod: 00h 0 : OFF
-
-LFO[1].lag: 00h 0 :
-
-LFO[1].wave: 00h 0 : TRIANGLE
-
-LFO[1].retrig: 00h 0
-
-LFO[1].sample 00h 0 : KBD
-
-LFO[1].amp: 3Fh 63
-
+LFO[1].speed:    1Ch       28
+LFO[1].trg_mod:  00h        0 : OFF
+LFO[1].lag:      00h        0 :
+LFO[1].wave:     00h        0 : TRIANGLE
+LFO[1].retrig:   00h        0
+LFO[1].sample    00h        0 : KBD
+LFO[1].amp:      3Fh       63
 ---------------------------
-
-LFO[2].speed: 39h 57
-
-LFO[2].trg\_mod: 00h 0 : OFF
-
-LFO[2].lag: 00h 0 :
-
-LFO[2].wave: 00h 0 : TRIANGLE
-
-LFO[2].retrig: 00h 0
-
-LFO[2].sample 00h 0 : KBD
-
-LFO[2].amp: 00h 0
-
+LFO[2].speed:    39h       57
+LFO[2].trg_mod:  00h        0 : OFF
+LFO[2].lag:      00h        0 :
+LFO[2].wave:     00h        0 : TRIANGLE
+LFO[2].retrig:   00h        0
+LFO[2].sample    00h        0 : KBD
+LFO[2].amp:      00h        0
 ---------------------------
-
-LFO[3].speed: 30h 48
-
-LFO[3].trg\_mod: 00h 0 : OFF
-
-LFO[3].lag: 00h 0 :
-
-LFO[3].wave: 00h 0 : TRIANGLE
-
-LFO[3].retrig: 00h 0
-
-LFO[3].sample 00h 0 : KBD
-
-LFO[3].amp: 3Fh 63
-
+LFO[3].speed:    30h       48
+LFO[3].trg_mod:  00h        0 : OFF
+LFO[3].lag:      00h        0 :
+LFO[3].wave:     00h        0 : TRIANGLE
+LFO[3].retrig:   00h        0
+LFO[3].sample    00h        0 : KBD
+LFO[3].amp:      3Fh       63
 ---------------------------
-
-LFO[4].speed: 30h 48
-
-LFO[4].trg\_mod: 00h 0 : OFF
-
-LFO[4].lag: 00h 0 :
-
-LFO[4].wave: 00h 0 : TRIANGLE
-
-LFO[4].retrig: 00h 0
-
-LFO[4].sample 00h 0 : KBD
-
-LFO[4].amp: 3Fh 63
-
+LFO[4].speed:    30h       48
+LFO[4].trg_mod:  00h        0 : OFF
+LFO[4].lag:      00h        0 :
+LFO[4].wave:     00h        0 : TRIANGLE
+LFO[4].retrig:   00h        0
+LFO[4].sample    00h        0 : KBD
+LFO[4].amp:      3Fh       63
 ---------------------------
-
-LFO[5].speed: 0Dh 13
-
-LFO[5].trg\_mod: 00h 0 : OFF
-
-LFO[5].lag: 00h 0 :
-
-LFO[5].wave: 00h 0 : TRIANGLE
-
-LFO[5].retrig: 00h 0
-
-LFO[5].sample 00h 0 : KBD
-
-LFO[5].amp: 3Fh 63
-
+LFO[5].speed:    0Dh       13
+LFO[5].trg_mod:  00h        0 : OFF
+LFO[5].lag:      00h        0 :
+LFO[5].wave:     00h        0 : TRIANGLE
+LFO[5].retrig:   00h        0
+LFO[5].sample    00h        0 : KBD
+LFO[5].amp:      3Fh       63
 ---------------------------
-
-ENV[1].flags: 84h 132 : MULTI FREERUN
-
-ENV[1].lfo\_trg: 00h 0 : LFO1
-
-ENV[1].delay: 11h 17
-
-ENV[1].attck: 08h 8
-
-ENV[1].decay: 07h 7
-
-ENV[1].sustain: 17h 23
-
-ENV[1].rel: 17h 23
-
-ENV[1].amp: 12h 18
-
+ENV[1].flags:    84h      132 : MULTI FREERUN
+ENV[1].lfo_trg:  00h        0 : LFO1
+ENV[1].delay:    11h       17
+ENV[1].attck:    08h        8
+ENV[1].decay:    07h        7
+ENV[1].sustain:  17h       23
+ENV[1].rel:      17h       23
+ENV[1].amp:      12h       18
 ---------------------------
-
-ENV[2].flags: 04h 4 : MULTI
-
-ENV[2].lfo\_trg: 00h 0 : LFO1
-
-ENV[2].delay: 00h 0
-
-ENV[2].attck: 00h 0
-
-ENV[2].decay: 00h 0
-
-ENV[2].sustain: 3Fh 63
-
-ENV[2].rel: 09h 9
-
-ENV[2].amp: 3Fh 63
-
+ENV[2].flags:    04h        4 : MULTI
+ENV[2].lfo_trg:  00h        0 : LFO1
+ENV[2].delay:    00h        0
+ENV[2].attck:    00h        0
+ENV[2].decay:    00h        0
+ENV[2].sustain:  3Fh       63
+ENV[2].rel:      09h        9
+ENV[2].amp:      3Fh       63
 ---------------------------
-
-ENV[3].flags: 04h 4 : MULTI
-
-ENV[3].lfo\_trg: 00h 0 : LFO1
-
-ENV[3].delay: 00h 0
-
-ENV[3].attck: 0Fh 15
-
-ENV[3].decay: 00h 0
-
-ENV[3].sustain: 3Fh 63
-
-ENV[3].rel: 19h 25
-
-ENV[3].amp: 3Fh 63
-
+ENV[3].flags:    04h        4 : MULTI
+ENV[3].lfo_trg:  00h        0 : LFO1
+ENV[3].delay:    00h        0
+ENV[3].attck:    0Fh       15
+ENV[3].decay:    00h        0
+ENV[3].sustain:  3Fh       63
+ENV[3].rel:      19h       25
+ENV[3].amp:      3Fh       63
 ---------------------------
-
-ENV[4].flags: 84h 132 : MULTI FREERUN
-
-ENV[4].lfo\_trg: 00h 0 : LFO1
-
-ENV[4].delay: 00h 0
-
-ENV[4].attck: 00h 0
-
-ENV[4].decay: 00h 0
-
-ENV[4].sustain: 3Fh 63
-
-ENV[4].rel: 00h 0
-
-ENV[4].amp: 3Fh 63
-
+ENV[4].flags:    84h      132 : MULTI FREERUN
+ENV[4].lfo_trg:  00h        0 : LFO1
+ENV[4].delay:    00h        0
+ENV[4].attck:    00h        0
+ENV[4].decay:    00h        0
+ENV[4].sustain:  3Fh       63
+ENV[4].rel:      00h        0
+ENV[4].amp:      3Fh       63
 ---------------------------
-
-ENV[5].flags: 84h 132 : MULTI FREERUN
-
-ENV[5].lfo\_trg: 00h 0 : LFO1
-
-ENV[5].delay: 00h 0
-
-ENV[5].attck: 07h 7
-
-ENV[5].decay: 00h 0
-
-ENV[5].sustain: 3Fh 63
-
-ENV[5].rel: 09h 9
-
-ENV[5].amp: 3Fh 63
-
+ENV[5].flags:    84h      132 : MULTI FREERUN
+ENV[5].lfo_trg:  00h        0 : LFO1
+ENV[5].delay:    00h        0
+ENV[5].attck:    07h        7
+ENV[5].decay:    00h        0
+ENV[5].sustain:  3Fh       63
+ENV[5].rel:      09h        9
+ENV[5].amp:      3Fh       63
 ---------------------------
-
-TRACK[1].input: 00h 0 : KBD
-
-TRACK[1].points: 60,63,25,56,54
-
+TRACK[1].input:  00h        0 : KBD
+TRACK[1].points:            60,63,25,56,54
 ---------------------------
-
-TRACK[2].input: 00h 0 : KBD
-
-TRACK[2].points: 0,15,31,47,63
-
+TRACK[2].input:  00h        0 : KBD
+TRACK[2].points:            0,15,31,47,63
 ---------------------------
-
-TRACK[3].input: 00h 0 : KBD
-
-TRACK[3].points: 0,15,31,47,63
-
+TRACK[3].input:  00h        0 : KBD
+TRACK[3].points:            0,15,31,47,63
 ---------------------------
-
-RAMP[1].rate: 1Fh 31
-
-RAMP[1].flags: 00h 0 :
-
-RAMP[1].lfotrg: 00h 0 : LFO1
-
+RAMP[1].rate:    1Fh       31
+RAMP[1].flags:   00h        0 :
+RAMP[1].lfotrg:  00h        0 : LFO1
 ---------------------------
-
-RAMP[2].rate: 1Fh 31
-
-RAMP[2].flags: 00h 0 :
-
-RAMP[2].lfotrg: 00h 0 : LFO1
-
+RAMP[2].rate:    1Fh       31
+RAMP[2].flags:   00h        0 :
+RAMP[2].lfotrg:  00h        0 : LFO1
 ---------------------------
-
-RAMP[3].rate: 1Fh 31
-
-RAMP[3].flags: 00h 0 :
-
-RAMP[3].lfotrg: 00h 0 : LFO1
-
+RAMP[3].rate:    1Fh       31
+RAMP[3].flags:   00h        0 :
+RAMP[3].lfotrg:  00h        0 : LFO1
 ---------------------------
-
-RAMP[4].rate: 1Fh 31
-
-RAMP[4].flags: 00h 0 :
-
-RAMP[4].lfotrg: 00h 0 : LFO1
-
+RAMP[4].rate:    1Fh       31
+RAMP[4].flags:   00h        0 :
+RAMP[4].lfotrg:  00h        0 : LFO1
 ---------------------------
-
 MOD[01]: ENV2 modulates RMP2, amount 63
-
 ---------------------------
-
 MOD[02]: ENV5 modulates TRK2, amount 60
-
 ---------------------------
-
 MOD[03]: LFO2 modulates KBD, amount 58
-
 ---------------------------
-
 MOD[04]: LFO2 modulates RVEL, amount 58
-
 ---------------------------
-
 MOD[05]: PRES modulates ENV2, amount 41
-
 ---------------------------
-
 MOD[06]: PED1 modulates SINGLE, amount 55
-
 ---------------------------
-
 MOD[07]: ENV1 modulates RMP2, amount 0
-
 ---------------------------
-
 MOD[08]: LFO1 modulates PRES, amount 52
-
 ---------------------------
-
 MOD[09]: LFO1 modulates LAG, amount -52
-
 ---------------------------
-
 MOD[10]: ENV3 modulates KBD, amount 13
-
 ---------------------------
-
 MOD[11]: UNUSED ENTRY
-
 ---------------------------
-
 MOD[12]: UNUSED ENTRY
-
 ---------------------------
-
 MOD[13]: UNUSED ENTRY
-
 ---------------------------
-
 MOD[14]: UNUSED ENTRY
-
 ---------------------------
-
 MOD[15]: UNUSED ENTRY
-
 ---------------------------
-
 MOD[16]: UNUSED ENTRY
-
 ---------------------------
-
 MOD[17]: UNUSED ENTRY
-
 ---------------------------
-
 MOD[18]: UNUSED ENTRY
-
 ---------------------------
-
 MOD[19]: UNUSED ENTRY
-
 ---------------------------
-
 MOD[20]: UNUSED ENTRY
+```
 
 # DECIMAL/HEXADECIMAL/BINARY CONVERSION TABLE (unsigned values)
 
