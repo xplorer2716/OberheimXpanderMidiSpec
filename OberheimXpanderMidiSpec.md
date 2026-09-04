@@ -4,188 +4,118 @@ Matrix-12/Xpander MIDI Specification
 
 image courtesy of http://www.soundofmusic.se
 
-|  |
-| --- |
-| Note: This document is a rework of three old plain text files dealing with the MIDI spec of the Xpander/Matrix-12.   * <http://machines.hyperreal.org/manufacturers/Oberheim/Xpander.Matrix-12/info/Xpander.MIDI-spec.txt> * <http://www.soundofmusic.se/files/xpander_usergroup.htm> * <http://www.soundofmusic.se/files/xpander_midi_controller_notes.txt>   This rework has been done to get a more human readable and unique set of information. Changes or additional information about the MIDI implementation were added when required. Redundant information between these files has been removed.  The last version of this document is available here:   * https://github.com/xplorer2716/OberheimXpanderMidiSpec   This document and example source code are released under the GPL V3.0 license.  [*https://github.com/xplorer2716*](https://github.com/xplorer2716) *– April 2024* |
+> Note: This document is a rework of three old plain text files dealing with the MIDI spec of the Xpander/Matrix-12.
+>
+> - <http://machines.hyperreal.org/manufacturers/Oberheim/Xpander.Matrix-12/info/Xpander.MIDI-spec.txt>
+> - <http://www.soundofmusic.se/files/xpander_usergroup.htm>
+> - <http://www.soundofmusic.se/files/xpander_midi_controller_notes.txt>
+>
+> This rework has been done to get a more human readable and unique set of information. Changes or additional information about the MIDI implementation were added when required. Redundant information between these files has been removed.
+>
+> The last version of this document is available here:
+>
+> - <https://github.com/xplorer2716/OberheimXpanderMidiSpec>
+>
+> This document and example source code are released under the GPL V3.0 license.
+>
+> [*https://github.com/xplorer2716*](https://github.com/xplorer2716) *– April 2024*
 
 This document assumes familiarity with the MIDI 1.0 specification and the operation of the Xpander (or Matrix-12). Unless otherwise stated, all specifications and references to Xpander apply to both Xpander and Matrix-12. For further information on the Xpander refer to the 0berheim Xpander Owner's Manual (Part number 950036).
 
 # Change log
 
-|  |  |
+| Date | Change |
 | --- | --- |
-| **Date** | **Change** |
 | 05/27/2024 | Minor updates |
-| 08/15/2008 | Program data dump follows and bulk data format updates.  Sample C/C++ source code of a single patch viewer application provided in the archive containing this document.  “Xpander MIDI Controller Notes” chapter moved before “MIDI Implementation”. |
+| 08/15/2008 | Program data dump follows and [bulk data format](#bulk-data-format-cc-programming-language) updates.<br>Sample C/C++ source code of a single patch viewer application provided in the archive containing this document.<br>“Xpander MIDI Controller Notes” chapter moved before “MIDI Implementation”. |
 | 08/04/2008 | Initial revision. |
 
-[Change log 2](#__RefHeading___Toc206582506)
-
-[XPANDER OVERVIEW 5](#__RefHeading___Toc206582507)
-
-[MIDI Control 5](#__RefHeading___Toc206582508)
-
-[Page Editing 5](#__RefHeading___Toc206582509)
-
-[Edit Modes 5](#__RefHeading___Toc206582510)
-
-[Voice Assignment 6](#__RefHeading___Toc206582511)
-
-[Zones 6](#__RefHeading___Toc206582512)
-
-[Master MIDI Page 6](#__RefHeading___Toc206582513)
-
-[Controller assignment (Lever 1/2, Pedal 1/2) 6](#__RefHeading___Toc206582514)
-
-[MIDI Enables 7](#__RefHeading___Toc206582515)
-
-[Send 8](#__RefHeading___Toc206582516)
-
-[Midi Reset 8](#__RefHeading___Toc206582517)
-
-[Triggers and Gates 8](#__RefHeading___Toc206582518)
-
-[XPANDER MIDI CONTROLLER NOTES 9](#__RefHeading___Toc206582519)
-
-[Pitch Bend 9](#__RefHeading___Toc206582520)
-
-[Individualized Vibrato Stored by Patch / Mod Lever 9](#__RefHeading___Toc206582521)
-
-[Single Patch Global Vib (programable enables per patch) 9](#__RefHeading___Toc206582522)
-
-[Programming Sustain Pedal (Non-MIDI) 10](#__RefHeading___Toc206582523)
-
-[Midi Sustain Controller 10](#__RefHeading___Toc206582524)
-
-[Velocity 10](#__RefHeading___Toc206582525)
-
-[IMPLEMENTATION NOTES 11](#__RefHeading___Toc206582526)
-
-[Status Bytes 11](#__RefHeading___Toc206582527)
-
-[Data bytes 11](#__RefHeading___Toc206582528)
-
-[All Notes Off 11](#__RefHeading___Toc206582529)
-
-[Modes 11](#__RefHeading___Toc206582530)
-
-[Power On Defaults 11](#__RefHeading___Toc206582531)
-
-[Note Off (Status = 1000nnnn / 8xH) 12](#__RefHeading___Toc206582532)
-
-[Note On (Status = 1001nnnn / 9xH) 12](#__RefHeading___Toc206582533)
-
-[Control Change (Status = 1011nnnn / BxH) 12](#__RefHeading___Toc206582534)
-
-[Program Change (Status = 1100nnnn / CxH) 12](#__RefHeading___Toc206582535)
-
-[Channel Pressure (Status = 1101nnnn / DxH) 12](#__RefHeading___Toc206582536)
-
-[Pitch Wheel Change (Status = 1110nnnn / ExH) 12](#__RefHeading___Toc206582537)
-
-[System Exclusive (Status = F0H) 13](#__RefHeading___Toc206582538)
-
-[Tune Request (Status = F6H) 13](#__RefHeading___Toc206582539)
-
-[EOX (Status = F7H) 13](#__RefHeading___Toc206582540)
-
-[APPENDIX A: MIDI IMPLEMENTATION SUMMARY 14](#__RefHeading___Toc206582541)
-
-[Transmitted Data - Channel Voice Messages 14](#__RefHeading___Toc206582542)
-
-[Program select 14](#__RefHeading___Toc206582543)
-
-[Recognized Receive Data - Channel Voice Messages 14](#__RefHeading___Toc206582544)
-
-[Note off 14](#__RefHeading___Toc206582545)
-
-[Note on 14](#__RefHeading___Toc206582546)
-
-[Control Change 14](#__RefHeading___Toc206582547)
-
-[Program select 14](#__RefHeading___Toc206582548)
-
-[Pitch Bend Change 14](#__RefHeading___Toc206582549)
-
-[Recognized Receive Data - Channel Mode Messages 15](#__RefHeading___Toc206582550)
-
-[All Note off 15](#__RefHeading___Toc206582551)
-
-[OMNI off 15](#__RefHeading___Toc206582552)
-
-[OMNI on 15](#__RefHeading___Toc206582553)
-
-[MONO on 15](#__RefHeading___Toc206582554)
-
-[POLY on 15](#__RefHeading___Toc206582555)
-
-[Recognized Receive Data - System messages 15](#__RefHeading___Toc206582556)
-
-[APPENDIX B: SYSTEM EXCLUSIVE INFORMATION 16](#__RefHeading___Toc206582557)
-
-[Transmitted Data - Channel Voice Messages 16](#__RefHeading___Toc206582558)
-
-[Program data dump follows 16](#__RefHeading___Toc206582559)
-
-[Copy 16](#__RefHeading___Toc206582560)
-
-[Store 16](#__RefHeading___Toc206582561)
-
-[Page edit follows 16](#__RefHeading___Toc206582562)
-
-[Page and subpage select 17](#__RefHeading___Toc206582563)
-
-[Programmer mode switches 17](#__RefHeading___Toc206582564)
-
-[Up/Down 17](#__RefHeading___Toc206582565)
-
-[Modulation Edit follows 17](#__RefHeading___Toc206582566)
-
-[Recognized Receive Data 17](#__RefHeading___Toc206582567)
-
-[Program data dump request 17](#__RefHeading___Toc206582568)
-
-[Program data dump follows 18](#__RefHeading___Toc206582569)
-
-[All data dump request 18](#__RefHeading___Toc206582570)
-
-[All data dump request (Matrix-12) 18](#__RefHeading___Toc206582571)
-
-[Copy 18](#__RefHeading___Toc206582572)
-
-[Display control command 19](#__RefHeading___Toc206582573)
-
-[Store 19](#__RefHeading___Toc206582574)
-
-[Page edit follows 19](#__RefHeading___Toc206582575)
-
-[Page and Subpage select 20](#__RefHeading___Toc206582576)
-
-[Transpose 20](#__RefHeading___Toc206582577)
-
-[Programmer mode switches 20](#__RefHeading___Toc206582578)
-
-[Up/Down 21](#__RefHeading___Toc206582579)
-
-[Modulation edit follows 21](#__RefHeading___Toc206582580)
-
-[Card select (Matrix-12 only) 21](#__RefHeading___Toc206582581)
-
-[PAGE NUMBER DEFINITION 22](#__RefHeading___Toc206582582)
-
-[BULK DATA FORMAT (C/C++ programming language) 24](#__RefHeading___Toc206582583)
-
-[Source code 24](#__RefHeading___Toc206582584)
-
-[XpanderSysEx.h 24](#__RefHeading___Toc206582585)
-
-[XpanderSysExViewer.cpp 24](#__RefHeading___Toc206582586)
-
-[XpanderSysExViewer.README.txt 24](#__RefHeading___Toc206582587)
-
-[Demo application: XpanderSysExViewer 24](#__RefHeading___Toc206582588)
-
-[DECIMAL/HEXADECIMAL/BINARY CONVERSION TABLE (unsigned values) 28](#__RefHeading___Toc206582589)
+**Contents**
+
+- [Change log](#change-log)
+- [XPANDER OVERVIEW](#xpander-overview)
+  - [MIDI Control](#midi-control)
+  - [Page Editing](#page-editing)
+  - [Edit Modes](#edit-modes)
+  - [Voice Assignment](#voice-assignment)
+    - [Zones](#zones)
+  - [Master MIDI Page](#master-midi-page)
+    - [Controller assignment (Lever 1/2, Pedal 1/2)](#controller-assignment-lever-12-pedal-12)
+    - [MIDI Enables](#midi-enables)
+    - [Send](#send)
+    - [Midi Reset](#midi-reset)
+  - [Triggers and Gates](#triggers-and-gates)
+- [XPANDER MIDI CONTROLLER NOTES](#xpander-midi-controller-notes)
+  - [Pitch Bend](#pitch-bend)
+  - [Individualized Vibrato Stored by Patch / Mod Lever](#individualized-vibrato-stored-by-patch--mod-lever)
+  - [Single Patch Global Vib (programable enables per patch)](#single-patch-global-vib-programable-enables-per-patch)
+  - [Programming Sustain Pedal (Non-MIDI)](#programming-sustain-pedal-non-midi)
+  - [Midi Sustain Controller](#midi-sustain-controller)
+  - [Velocity](#velocity)
+- [IMPLEMENTATION NOTES](#implementation-notes)
+  - [Status Bytes](#status-bytes)
+  - [Data bytes](#data-bytes)
+  - [All Notes Off](#all-notes-off)
+  - [Modes](#modes)
+  - [Power On Defaults](#power-on-defaults)
+  - [Note Off (Status = 1000nnnn / 8xH)](#note-off-status--1000nnnn--8xh)
+  - [Note On (Status = 1001nnnn / 9xH)](#note-on-status--1001nnnn--9xh)
+  - [Control Change (Status = 1011nnnn / BxH)](#control-change-status--1011nnnn--bxh)
+  - [Program Change (Status = 1100nnnn / CxH)](#program-change-status--1100nnnn--cxh)
+  - [Channel Pressure (Status = 1101nnnn / DxH)](#channel-pressure-status--1101nnnn--dxh)
+  - [Pitch Wheel Change (Status = 1110nnnn / ExH)](#pitch-wheel-change-status--1110nnnn--exh)
+  - [System Exclusive (Status = F0H)](#system-exclusive-status--f0h)
+  - [Tune Request (Status = F6H)](#tune-request-status--f6h)
+  - [EOX (Status = F7H)](#eox-status--f7h)
+- [APPENDIX A: MIDI IMPLEMENTATION SUMMARY](#appendix-a-midi-implementation-summary)
+  - [Transmitted Data - Channel Voice Messages](#transmitted-data---channel-voice-messages)
+    - [Program select](#program-select)
+  - [Recognized Receive Data - Channel Voice Messages](#recognized-receive-data---channel-voice-messages)
+    - [Note off](#note-off)
+    - [Note on](#note-on)
+    - [Control Change](#control-change)
+    - [Program select](#program-select-1)
+    - [Pitch Bend Change](#pitch-bend-change)
+  - [Recognized Receive Data - Channel Mode Messages](#recognized-receive-data---channel-mode-messages)
+    - [All Note off](#all-note-off)
+    - [OMNI off](#omni-off)
+    - [OMNI on](#omni-on)
+    - [MONO on](#mono-on)
+    - [POLY on](#poly-on)
+  - [Recognized Receive Data - System messages](#recognized-receive-data---system-messages)
+- [APPENDIX B: SYSTEM EXCLUSIVE INFORMATION](#appendix-b-system-exclusive-information)
+  - [Transmitted Data - Channel Voice Messages](#transmitted-data---channel-voice-messages-1)
+    - [Program data dump follows](#program-data-dump-follows)
+    - [Copy](#copy)
+    - [Store](#store)
+    - [Page edit follows](#page-edit-follows)
+    - [Page and subpage select](#page-and-subpage-select)
+    - [Programmer mode switches](#programmer-mode-switches)
+    - [Up/Down](#updown)
+    - [Modulation Edit follows](#modulation-edit-follows)
+  - [Recognized Receive Data](#recognized-receive-data)
+    - [Program data dump request](#program-data-dump-request)
+    - [Program data dump follows](#program-data-dump-follows-1)
+    - [All data dump request](#all-data-dump-request)
+    - [All data dump request (Matrix-12)](#all-data-dump-request-matrix-12)
+    - [Copy](#copy-1)
+    - [Display control command](#display-control-command)
+    - [Store](#store-1)
+    - [Page edit follows](#page-edit-follows-1)
+    - [Page and Subpage select](#page-and-subpage-select-1)
+    - [Transpose](#transpose)
+    - [Programmer mode switches](#programmer-mode-switches-1)
+    - [Up/Down](#updown-1)
+    - [Modulation edit follows](#modulation-edit-follows-1)
+    - [Card select (Matrix-12 only)](#card-select-matrix-12-only)
+- [PAGE NUMBER DEFINITION](#page-number-definition)
+- [BULK DATA FORMAT (C/C++ programming language)](#bulk-data-format-cc-programming-language)
+  - [Source code](#source-code)
+    - [XpanderSysEx.h](#xpandersysexh)
+    - [XpanderSysExViewer.cpp](#xpandersysexviewercpp)
+    - [XpanderSysExViewer.README.txt](#xpandersysexviewerreadmetxt)
+  - [Demo application: XpanderSysExViewer](#demo-application-xpandersysexviewer)
+- [DECIMAL/HEXADECIMAL/BINARY CONVERSION TABLE (unsigned values)](#decimalhexadecimalbinary-conversion-table-unsigned-values)
 
 # XPANDER OVERVIEW
 
@@ -494,9 +424,8 @@ The EOX (End of transmission) message is therefore considered a No-op by the Xpa
 
 ### Program select
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
 | C0H | 0nnn nnnn = 0 through 99**bytes** | Program select (If enabled) |
 
 ## Recognized Receive Data - Channel Voice Messages
@@ -508,81 +437,70 @@ Note:
 
 ### Note off
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1000 xxxx | 0kkk kkkk  0vvv vvvv | Note Off (See notes 1,2)  0vvv vvvv = note off velocity |
+| 1000 xxxx | 0kkk kkkk<br>0vvv vvvv | Note Off (See notes 1,2)<br>0vvv vvvv = note off velocity |
 
 ### Note on
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1001 xxxx | 0kkk kkkk  0vvv vvvv | Note On (See notes 1,2)  0vvv vvvv - 0 Note Off  0vv vvvv > 0 note on velocity |
+| 1001 xxxx | 0kkk kkkk<br>0vvv vvvv | Note On (See notes 1,2)<br>0vvv vvvv - 0 Note Off<br>0vv vvvv &gt; 0 note on velocity |
 
 ### Control Change
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1011 xxxx | 0ccc cccc  0nnn nnnn | Control Change (if enabled)  0ccc cccc = control number  0nnn nnnn = control value |
+| 1011 xxxx | 0ccc cccc<br>0nnn nnnn | Control Change (if enabled)<br>0ccc cccc = control number<br>0nnn nnnn = control value |
 
 ### Program select
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1100 xxxx | 0nnn nnnn | Program Select (If enabled)  0nnn nnnn = 0 through 99 |
+| 1100 xxxx | 0nnn nnnn | Program Select (If enabled)<br>0nnn nnnn = 0 through 99 |
 
 ### Pitch Bend Change
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1110 xxxx | 0nnn nnnn  0nnn nnnn | Pitch Bend Change LSB  Pitch Bend Change MSB |
+| 1110 xxxx | 0nnn nnnn<br>0nnn nnnn | Pitch Bend Change LSB<br>Pitch Bend Change MSB |
 
 ## Recognized Receive Data - Channel Mode Messages
 
 ### All Note off
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1011 xxxx | 7BH  00H | All Notes Off command.  The Xpander turns off all notes that were turned on by MIDI. |
+| 1011 xxxx | 7BH<br>00H | All Notes Off command.<br>The Xpander turns off all notes that were turned on by MIDI. |
 
 ### OMNI off
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1011 xxxx | 7CH  00H | OMNI mode off  The Xpander turns off all notes that were turned on by MIDI. |
+| 1011 xxxx | 7CH<br>00H | OMNI mode off<br>The Xpander turns off all notes that were turned on by MIDI. |
 
 ### OMNI on
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1011 xxxx | 7DH  00H | OMNI mode on.  The Xpander turns off all notes that were turned on by MIDI. |
+| 1011 xxxx | 7DH<br>00H | OMNI mode on.<br>The Xpander turns off all notes that were turned on by MIDI. |
 
 ### MONO on
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1011 xxxx | 7EH  00H | MONO mode on  The Xpander turns off all notes that were turned on by MIDI. |
+| 1011 xxxx | 7EH<br>00H | MONO mode on<br>The Xpander turns off all notes that were turned on by MIDI. |
 
 ### POLY on
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| 1011 xxxx | 7FH  00H | POLY mode on  The Xpander turns off all notes that were turned on by MIDI. |
+| 1011 xxxx | 7FH<br>00H | POLY mode on<br>The Xpander turns off all notes that were turned on by MIDI. |
 
 ## Recognized Receive Data - System messages
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
 | F6H |  | Tune Request (tune all) |
 
 # APPENDIX B: SYSTEM EXCLUSIVE INFORMATION
@@ -593,120 +511,105 @@ Note: The Xpander and Matrix-12 both use System Exclusive Device Number 02H exce
 
 ### Program data dump follows
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H                F7H | 10H  0ddd dddd  **01H**  0ccc cccc  0ppp pppp  <data> | System exclusive. Oberheim I.D. number.  Xpander = 02H (See note 3)  Matrix-12 = 04H (Multi patch dump only)  Command byte 1 Program data dump follows.  Command byte 2: Program type  0ccc cccc = 0 :voice data  0ccc cccc = 1: multi patch data  Command byte 3: Program number  Program data. See [bulk data format](#_BULK_DATA_FORMAT_(C_programming_lan) for details.  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**01H**<br>0ccc cccc<br>0ppp pppp<br>&lt;data&gt; | System exclusive. Oberheim I.D. number.<br>Xpander = 02H (See note 3)<br>Matrix-12 = 04H (Multi patch dump only)<br>Command byte 1 Program data dump follows.<br>Command byte 2: Program type<br>0ccc cccc = 0 :voice data<br>0ccc cccc = 1: multi patch data<br>Command byte 3: Program number<br>Program data. See [bulk data format](#bulk-data-format-cc-programming-language) for details.<br>End of System Exclusive status byte (EOX) |
 
 ### Copy
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H  F7H | 10H  02H  **04H**  0xxx xxxx  0000 000x | System exclusive. Oberheim I.D. number  Device number: Xpander = 2  Command byte 1 : Copy  Data : Lower 7 bits first followed by  most significant bit.  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>02H<br>**04H**<br>0xxx xxxx<br>0000 000x | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 2<br>Command byte 1 : Copy<br>Data : Lower 7 bits first followed by<br>most significant bit.<br>End of System Exclusive status byte (EOX) |
 
 ### Store
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H        F7H | 10H  02H  **07H**  0xxx xxxx | System exclusive. Oberheim I.D. number  Device number: Xpander = 2  Command byte 1 : Store  Data: program number.  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>02H<br>**07H**<br>0xxx xxxx | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 2<br>Command byte 1 : Store<br>Data: program number.<br>End of System Exclusive status byte (EOX) |
 
 ### Page edit follows
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H        F7H | 10H  02H  **0AH**  00H  <data> | System exclusive. Oberheim I.D. number  Device number: Xpander = 2  Command byte 1 : Page edit follows  See “recognized receive data”, same command.  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>02H<br>**0AH**<br>00H<br>&lt;data&gt; | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 2<br>Command byte 1 : Page edit follows<br>See “recognized receive data”, same command.<br>End of System Exclusive status byte (EOX) |
 
 ### Page and subpage select
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H  F7H | 10H  02H  **0BH**  0ppp pppp  0ppp pppp | System exclusive. Oberheim I.D. number  Device number: Xpander = 2  Command byte 1 : Page and subpage select  Page number  Subpage number  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>02H<br>**0BH**<br>0ppp pppp<br>0ppp pppp | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 2<br>Command byte 1 : Page and subpage select<br>Page number<br>Subpage number<br>End of System Exclusive status byte (EOX) |
 
 ### Programmer mode switches
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H  F7H | 10H  02H  **0DH**  0xxx xxxx  0000 000x | System exclusive. Oberheim I.D. number  Device number: Xpander = 2  Command byte 1 : Programmer Mode Switches  Data : Lower 7 bits first followed by  most significant bit.  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>02H<br>**0DH**<br>0xxx xxxx<br>0000 000x | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 2<br>Command byte 1 : Programmer Mode Switches<br>Data : Lower 7 bits first followed by<br>most significant bit.<br>End of System Exclusive status byte (EOX) |
 
 ### Up/Down
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H  F7H | 10H  02H  **0EH**  0000 0xx0 | System exclusive. Oberheim I.D. number  Device number: Xpander = 2  Command byte 1 : Up/Down  Data: Format = Set bit 3 = “+” key Set bit 2 = “-“ key  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>02H<br>**0EH**<br>0000 0xx0 | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 2<br>Command byte 1 : Up/Down<br>Data: Format = Set bit 3 = “+” key Set bit 2 = “-“ key<br>End of System Exclusive status byte (EOX) |
 
 ### Modulation Edit follows
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H  F7H | 10H  02H  **0FH**  <data> | System exclusive. Oberheim I.D. number  Device number: Xpander = 2  Command byte 1 : Modulation Edit follows  Data. See “recognized receive data”, same command.  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>02H<br>**0FH**<br>&lt;data&gt; | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 2<br>Command byte 1 : Modulation Edit follows<br>Data. See “recognized receive data”, same command.<br>End of System Exclusive status byte (EOX) |
 
 ## Recognized Receive Data
 
 ### Program data dump request
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H              F7H | 10H  0ddd dddd  **00H**  0ccc cccc      0ppp pppp | System exclusive. Oberheim I.D. number  Device number - Xpander = 02H (See note 3)  Command byte 1 : Program data dump request  Command byte 2: Program type  0ccc cccc = 0 voice data  0ccc cccc > 0 multi patch data  Command byte 3: Program number  End of System Exclusive status byte (EOX ) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**00H**<br>0ccc cccc<br>0ppp pppp | System exclusive. Oberheim I.D. number<br>Device number - Xpander = 02H (See note 3)<br>Command byte 1 : Program data dump request<br>Command byte 2: Program type<br>0ccc cccc = 0 voice data<br>0ccc cccc &gt; 0 multi patch data<br>Command byte 3: Program number<br>End of System Exclusive status byte (EOX ) |
 
 On receipt of this message, an Xpander or Matrix-12 will respond by transmitting a Program Data Dump Follows message for the requested patch. This does not affect the contents of the edit buffer.
 
 ### Program data dump follows
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H                    F7H | 10H  0ddd dddd      **01H**  0ccc cccc      0ppp pppp  <data> | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H (See note 3)  Matrix-12 = 04H (Multi patch dump only)    Command byte 1 Program data dump follows.  Command byte 2: Program type  0ccc cccc = 0 voice data ,  0ccc cccc = 1 multi patch data  Command byte 3: Program number (0 to 99)  Program data. See [bulk data format](#_BULK_DATA_FORMAT_(C_programming_lan) for details.  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**01H**<br>0ccc cccc<br>0ppp pppp<br>&lt;data&gt; | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H (See note 3)<br>Matrix-12 = 04H (Multi patch dump only)<br>Command byte 1 Program data dump follows.<br>Command byte 2: Program type<br>0ccc cccc = 0 voice data ,<br>0ccc cccc = 1 multi patch data<br>Command byte 3: Program number (0 to 99)<br>Program data. See [bulk data format](#bulk-data-format-cc-programming-language) for details.<br>End of System Exclusive status byte (EOX) |
 
 On receipt of this message the data is stored into patch memory at the specified location. This does not affect the contents of the edit buffer.
 
 ### All data dump request
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H        F7H | 10H  0ddd dddd  **02H**  00H | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : All data dump request  Command byte 2: voice data  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**02H**<br>00H | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : All data dump request<br>Command byte 2: voice data<br>End of System Exclusive status byte (EOX) |
 
 ### All data dump request (Matrix-12)
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H        F7H | 10H  0ddd dddd  **02H**  01H | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1: All data dump request  Command byte 2 Multi patch data (Matrix-12)  End of System Exclusive status byte (EOX |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**02H**<br>01H | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1: All data dump request<br>Command byte 2 Multi patch data (Matrix-12)<br>End of System Exclusive status byte (EOX |
 
 Receipt of this message causes the entire contents of the Xpander or Matrix-12 to be dumped in a series of Program Data Dump Follows messages. The patches are dumped in sequential ascending order, first single patches, then multi patches. Each patch is sent as a separate complete SysEx message bracketed by F0H-F7H. The contents of the edit buffer are not affected.
 
 ### Copy
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H          F7H | 10H  0dd dddd  **04H**  0xxx xxxx  0000 000x | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : Copy  Data : Lower 7 bits first followed by most significant bit. :<id\_lo>: See Definitions for Programmer Mode (0DH),  :<id\_hi>: but low order 2 bits of id\_lo must be 0.  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0dd dddd<br>**04H**<br>0xxx xxxx<br>0000 000x | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Copy<br>Data : Lower 7 bits first followed by most significant bit. :&lt;id_lo&gt;: See Definitions for Programmer Mode (0DH),<br>:&lt;id_hi&gt;: but low order 2 bits of id_lo must be 0.<br>End of System Exclusive status byte (EOX) |
 
 This message may only be used in multi patch mode when a single voice is currently selected. The effect is to copy the contents of that voice's edit buffer to the edit buffers of the specified voices. Note that this can not be used to copy an edit buffer from one bank to the other on a Matrix-12.
 
 ### Display control command
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H                  F7H | 10H  0ddd dddd  0ccc cccc      <data> | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : Display control command  **05H** = Xpander  **06H** = Matrix-12  00H = display control off  01H : <disposition>: 80 bytes of ASCII data follows  02H = display on  ASCII data  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>0ccc cccc<br>&lt;data&gt; | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Display control command<br>**05H** = Xpander<br>**06H** = Matrix-12<br>00H = display control off<br>01H : &lt;disposition&gt;: 80 bytes of ASCII data follows<br>02H = display on<br>ASCII data<br>End of System Exclusive status byte (EOX) |
 
 This message will cas the receiving unit to display up to 80 characters of ASCII in the center two displays. All characters must be in the range 20H-5FH (space to underscore). The data is written into a separate buffer which is then displayed. Each message rewrites the buffer starting at the first character so that if fewer than 80 characters are written, data from a previous message may appear in the display. If no text is sent before the EOX in a <disposition>=1 message, the entire previous contents of the message buffer will be displayed.
 
 ### Store
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H        F7H | 10H  0ddd dddd  **07H**  0xxx xxxx | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : Store  Data: Program number (0 to 99)  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**07H**<br>0xxx xxxx | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Store<br>Data: Program number (0 to 99)<br>End of System Exclusive status byte (EOX) |
 
 Store the current edit buffer (single or multi) into the specified patch location.
 
@@ -716,37 +619,33 @@ In multi mode, the effect depends on what is actively selected: If a multi patch
 
 ### Page edit follows
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H          F7H | 10H  0ddd dddd  **0AH**  00H  <data> | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte .1 : Page edit follows    [<id> 00 <rot\_lo> <rot\_hi> <val\_lo> <val\_hi>]  <id>:  = 00H - 05H for actions on with top buttons.  = 08H - 0DH for actions on with bottom buttons.  = 18H - 1DH for actions on rotary encoders.  <rot> (8 bit value in two bytes, MS bit in d0 of second byte) : amount that a rotary switch has been turned as an 8 bit, 2's complement number.  <val> (same as <rot>): value for controller as 8 bit 2Us complement number. Note that flags (e.g. VCO2 Sync) have a value of 0 or 1.  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**0AH**<br>00H<br>&lt;data&gt; | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte .1 : Page edit follows<br>[&lt;id&gt; 00 &lt;rot_lo&gt; &lt;rot_hi&gt; &lt;val_lo&gt; &lt;val_hi&gt;]<br>&lt;id&gt;:<br>= 00H - 05H for actions on with top buttons.<br>= 08H - 0DH for actions on with bottom buttons.<br>= 18H - 1DH for actions on rotary encoders.<br>&lt;rot&gt; (8 bit value in two bytes, MS bit in d0 of second byte) : amount that a rotary switch has been turned as an 8 bit, 2's complement number.<br>&lt;val&gt; (same as &lt;rot&gt;): value for controller as 8 bit 2Us complement number. Note that flags (e.g. VCO2 Sync) have a value of 0 or 1.<br>End of System Exclusive status byte (EOX) |
 
 In the special case when a modulation is cleared from the modulation routings page on the Matrix-12, <id> is 0AH, and <val> is 3FH.
 
 ### Page and Subpage select
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H          F7H | 10H  0ddd dddd  **0BH**  0ppp pppp  0ppp pppp | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : Page and Subpage select  Page number  Subpage number  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**0BH**<br>0ppp pppp<br>0ppp pppp | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Page and Subpage select<br>Page number<br>Subpage number<br>End of System Exclusive status byte (EOX) |
 
 This message selects the specified page and sub page. If this page is not defined in the current mode, the command will be ignored.
 
 ### Transpose
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H        F7H | 10H  0ddd dddd  **0CH**  <xpose\_lo>  <xpose\_hi> | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : Programmer mode switches  These bytes represent a 8 bit, 2Us complement  number in the range of -24 to +24 (?)  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**0CH**<br>&lt;xpose_lo&gt;<br>&lt;xpose_hi&gt; | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Programmer mode switches<br>These bytes represent a 8 bit, 2Us complement<br>number in the range of -24 to +24 (?)<br>End of System Exclusive status byte (EOX) |
 
 This sets the Master Transpose of the unit.
 
 ### Programmer mode switches
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H        F7H | 10H  0ddd dddd  **0DH**  <id\_lo>  <id\_hi> | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : Programmer mode switches  <id> (8 bit quantity in two bytes) as follows:  SINGLE 01H (01H 00H)  MULTI 02H (02H 00H)  1/7 04H (04H 00H)  2/8 08H (08H 00H)  3/9 10H (10H 00H)  4/10 20H (20H 00H)  5/11 40H (40H 00H)  6/12 80H (00H 01H)  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**0DH**<br>&lt;id_lo&gt;<br>&lt;id_hi&gt; | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Programmer mode switches<br>&lt;id&gt; (8 bit quantity in two bytes) as follows:<br>SINGLE 01H (01H 00H)<br>MULTI 02H (02H 00H)<br>1/7 04H (04H 00H)<br>2/8 08H (08H 00H)<br>3/9 10H (10H 00H)<br>4/10 20H (20H 00H)<br>5/11 40H (40H 00H)<br>6/12 80H (00H 01H)<br>End of System Exclusive status byte (EOX) |
 
 Note that pressing several (Patch Edit) buttons simultaneously produces an <id> that is the inclusive OR of the appropriate bits.
 
@@ -754,10 +653,9 @@ Note that pressing several (Patch Edit) buttons simultaneously produces an <id> 
 
 ### Up/Down
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H          F7H | 10H  0ddd dddd  **0EH**  0000 0xx0 | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : Up/Down  Data Format: Set bit 3 = “+” key, Set bit 2 = “-“ key  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**0EH**<br>0000 0xx0 | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Up/Down<br>Data Format: Set bit 3 = “+” key, Set bit 2 = “-“ key<br>End of System Exclusive status byte (EOX) |
 
 Note that these values have been corrected since the first printing of this specification.
 
@@ -767,23 +665,20 @@ The messages generated are identical in SINGLE, MULTI, and Reselecting single vo
 
 ### Modulation edit follows
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H        F7H | 10H  0ddd dddd  **0FH**  00H  <data> | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : Modulation edit follows  [<id> 00 <action> <val\_lo> <val\_hi>]  <id>:0-5, where 0 is the first modulation for the page, 1 is the second, etc.  <action>: specifies val (8 bits in 2 bytes):  00 Add Modulation Source: ID of source range 0-26  01 Delete Modulation N/A  02 Change Source New source ID range 0-26  03 Set value Value (unsigned)  04 Dial Value Amount of change  05 Set Quantize 0 = off, 1 = quantize  06 Toggle Quantize N/A  07 “+” or “-“ : 0 = “+”, 1 = “-“    End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**0FH**<br>00H<br>&lt;data&gt; | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Modulation edit follows<br>[&lt;id&gt; 00 &lt;action&gt; &lt;val_lo&gt; &lt;val_hi&gt;]<br>&lt;id&gt;:0-5, where 0 is the first modulation for the page, 1 is the second, etc.<br>&lt;action&gt;: specifies val (8 bits in 2 bytes):<br>00 Add Modulation Source: ID of source range 0-26<br>01 Delete Modulation N/A<br>02 Change Source New source ID range 0-26<br>03 Set value Value (unsigned)<br>04 Dial Value Amount of change<br>05 Set Quantize 0 = off, 1 = quantize<br>06 Toggle Quantize N/A<br>07 “+” or “-“ : 0 = “+”, 1 = “-“<br>End of System Exclusive status byte (EOX) |
 
 ### Card select (Matrix-12 only)
 
-|  |  |  |
+| Status | Data bytes | Description |
 | --- | --- | --- |
-| **Status** | **Data bytes** | **Description** |
-| F0H        F7H | 10H  0ddd dddd  **10H**  0nnn nnnn | System exclusive. Oberheim I.D. number  Device number: Xpander = 02H  Command byte 1 : Card select (Matrix-12 only)  Voice Card number:  0 to select voices 1-6  1 to select voices 7 - 12  End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**10H**<br>0nnn nnnn | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Card select (Matrix-12 only)<br>Voice Card number:<br>0 to select voices 1-6<br>1 to select voices 7 - 12<br>End of System Exclusive status byte (EOX) |
 
 # PAGE NUMBER DEFINITION
 
-|  |  |  |
+| Page # (dec) | Page # (hex) | Page description |
 | --- | --- | --- |
-| **Page # (dec)** | **Page # (hex)** | **Page description** |
 | 0 | 0H | Master x |
 | 1 | 1H | Tune x |
 | 2 | 2H | Chain |
@@ -1250,9 +1145,8 @@ MOD[20]: UNUSED ENTRY
 
 # DECIMAL/HEXADECIMAL/BINARY CONVERSION TABLE (unsigned values)
 
-|  |  |  |  |  |  |  |  |  |  |  |  |
+| decimal | hexa | binary | decimal | hexa | binary | decimal | hexa | binary | decimal | hexa | binary |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **decimal** | **hexa** | **binary** | **decimal** | **hexa** | **binary** | **decimal** | **hexa** | **binary** | **decimal** | **hexa** | **binary** |
 | 0 | 0 | 0 | 64 | 40 | 1000000 | 128 | 80 | 10000000 | 192 | c0 | 11000000 |
 | 1 | 1 | 1 | 65 | 41 | 1000001 | 129 | 81 | 10000001 | 193 | c1 | 11000001 |
 | 2 | 2 | 10 | 66 | 42 | 1000010 | 130 | 82 | 10000010 | 194 | c2 | 11000010 |
