@@ -1,8 +1,4 @@
-Matrix-12/Xpander MIDI Specification
-
-![](data:image/jpeg;base64...)
-
-image courtesy of http://www.soundofmusic.se
+# OBERHEIM MATRIX-12 / XPANDER MIDI SPECIFICATION
 
 > Note: This document is a rework of three old plain text files dealing with the MIDI spec of the Xpander/Matrix-12.
 >
@@ -774,9 +770,9 @@ You should read this file first.
 ## Demo application: XpanderSysExViewer
 
 This command line utility dumps in a human readable format the content of a single patch raw SysEx file. To run this software, open a command prompt with the following command line:
-
+```
 C:\>XpanderSinglePatchViewer [your\_raw\_sysex\_file]
-
+```
 Where [your\_raw\_sysex\_file] is the file you want to dump.
 
 If you specify a Multi patch sysex file, all single patches of the bank will be dumped, but not the multi patch data itself. This will be implemented in the next revision of this document.
