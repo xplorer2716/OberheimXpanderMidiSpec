@@ -22,6 +22,7 @@ This document assumes familiarity with the MIDI 1.0 specification and the operat
 
 | Date | Change |
 | --- | --- |
+| 09/05/2026 | Corrected the Up/Down (0EH) data byte: documented as a bit field, actually two discrete byte values (04H/08H) per the Xplorer reference implementation. |
 | 09/04/2026 | Convert to Markdown format |
 | 05/27/2024 | Minor updates |
 | 08/15/2008 | Program data dump follows and [bulk data format](#bulk-data-format-cc-programming-language) updates.<br>Sample C/C++ source code of a single patch viewer application provided in the archive containing this document.<br>“Xpander MIDI Controller Notes” chapter moved before “MIDI Implementation”. |
@@ -546,7 +547,7 @@ Note: The Xpander and Matrix-12 both use System Exclusive Device Number 02H exce
 
 | Status | Data bytes | Description |
 | --- | --- | --- |
-| F0H<br>F7H | 10H<br>02H<br>**0EH**<br>0000 0xx0 | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 2<br>Command byte 1 : Up/Down<br>Data: Format = Set bit 3 = “+” key Set bit 2 = “-“ key<br>End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>02H<br>**0EH**<br>04H or 08H | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 2<br>Command byte 1 : Up/Down<br>Data: 04H = “+” key, 08H = “-” key<br>End of System Exclusive status byte (EOX) |
 
 ### Modulation Edit follows
 
@@ -652,9 +653,9 @@ Note that pressing several (Patch Edit) buttons simultaneously produces an <id> 
 
 | Status | Data bytes | Description |
 | --- | --- | --- |
-| F0H<br>F7H | 10H<br>0ddd dddd<br>**0EH**<br>0000 0xx0 | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Up/Down<br>Data Format: Set bit 3 = “+” key, Set bit 2 = “-“ key<br>End of System Exclusive status byte (EOX) |
+| F0H<br>F7H | 10H<br>0ddd dddd<br>**0EH**<br>04H or 08H | System exclusive. Oberheim I.D. number<br>Device number: Xpander = 02H<br>Command byte 1 : Up/Down<br>Data: 04H = “+” key, 08H = “-” key<br>End of System Exclusive status byte (EOX) |
 
-Note that these values have been corrected since the first printing of this specification.
+Note: this data byte was previously documented as a bit field ("Set bit 3 = '+' key, Set bit 2 = '-' key"), which does not match the values actually observed on the wire. It has been corrected to the two discrete values above (04H for "+", 08H for "-"), verified against the [Xplorer](https://github.com/xplorer2716/XplorerEditor) reference implementation, which treats them as exact byte matches rather than a bit field.
 
 Changing program numbers with the “+” and “-“ keys generates the system exclusive message above. It does not generate a normal MIDI patch change message. Changing program numbers by typing the two digits generates a MIDI program change message, but not the system exclusive message.
 
